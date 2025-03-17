@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import layoutReducer from "./layoutSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    layout: layoutReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
