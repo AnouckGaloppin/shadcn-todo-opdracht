@@ -1,10 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import layoutReducer from "./layoutSlice";
+import todosApi from "./todosApi";
+import categoriesApi from "./categoriesApi";
 
 export const store = configureStore({
   reducer: {
-    layout: layoutReducer,
+    [todosApi.reducerPath]: todosApi.reducer,
+    [categoriesApi.reducerPath]: categoriesApi.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(
+      todosApi.middleware,
+      categoriesApi.middleware,
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
