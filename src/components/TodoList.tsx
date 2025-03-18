@@ -8,7 +8,7 @@ const TodoList = () => {
   const { data: categories } = useGetCategoriesQuery();
 
   return (
-    <ul className="m-10 flex flex-col gap-2">
+    <ul className="mt-5 flex flex-col gap-2">
       {todos && categories ? (
         todos.map((todo) => {
           const category: Category | undefined = categories.find(

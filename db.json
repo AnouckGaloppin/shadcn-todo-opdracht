@@ -111,6 +111,20 @@
       "completed": true,
       "category": "5",
       "description": "Read a chapter from a technical book for knowledge gain"
+    },
+    {
+      "id": "",
+      "text": "f",
+      "completed": false,
+      "category": "4",
+      "description": ""
+    },
+    {
+      "id": "",
+      "text": "h",
+      "completed": false,
+      "category": "4",
+      "description": ""
     }
   ],
   "categories": [

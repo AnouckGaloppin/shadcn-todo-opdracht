@@ -2,7 +2,7 @@ import ModeToggle from "./mode-toggle";
 
 const Layout = () => {
   return (
-    <div className="m-10 flex justify-between">
+    <div className="flex justify-between">
       <h1>Todo App</h1>
       <button>
         <ModeToggle />

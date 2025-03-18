@@ -1,12 +1,14 @@
 import Layout from "./components/Layout";
+import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import ThemeProvider from "@/components/theme-provider";
 
 const App = () => {
   return (
-    <div>
+    <div className="m-10 flex flex-col gap-5">
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Layout />
+        <TodoForm />
         <TodoList />
       </ThemeProvider>
     </div>
