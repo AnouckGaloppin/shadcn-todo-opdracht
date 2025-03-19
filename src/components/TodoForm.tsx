@@ -1,6 +1,3 @@
-import { useState } from "react";
-import todosApi, { useAddTodoMutation } from "@/store/todosApi";
-
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -14,27 +11,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useGetCategoriesQuery } from "../store/categoriesApi";
+import { useTodoActions } from "../hooks/useTodoActions";
 
 const TodoForm = () => {
   const { data: categories } = useGetCategoriesQuery();
+  const { todo, setText, category, setCategory, handleAddTodo } =
+    useTodoActions();
 
-  const [addTodo] = useAddTodoMutation();
-  const [todo, setText] = useState("");
-  const [category, setCategory] = useState("");
-
-  const handleAddTodo = () => {
-    if (!todo.trim()) return;
-    console.log(category);
-    addTodo({
-      text: todo,
-      id: "",
-      completed: false,
-      category,
-      description: "",
-    });
-    setText("");
-    setCategory("");
-  };
   return (
     <div className="flex gap-2">
       <Input
@@ -62,11 +45,6 @@ const TodoForm = () => {
             ) : (
               <p>No categories found</p>
             )}
-            {/* <SelectItem value="Work">Work</SelectItem>
-            <SelectItem value="Personal">Personal</SelectItem>
-            <SelectItem value="Health">Health</SelectItem>
-            <SelectItem value="Learning">Learning</SelectItem>
-            <SelectItem value="Shopping">Shopping</SelectItem> */}
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -77,4 +55,5 @@ const TodoForm = () => {
     </div>
   );
 };
+
 export default TodoForm;

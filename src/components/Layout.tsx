@@ -1,4 +1,5 @@
 import ModeToggle from "./mode-toggle";
+import { Toaster } from "@/components/ui/sonner";
 
 const Layout = () => {
   return (
@@ -6,6 +7,7 @@ const Layout = () => {
       <h1>Todo App</h1>
       <button>
         <ModeToggle />
+        <Toaster />
       </button>
     </div>
   );

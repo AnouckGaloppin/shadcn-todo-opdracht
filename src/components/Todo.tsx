@@ -2,6 +2,8 @@ import type { Todo } from "@/types/todoType";
 import type { Category } from "@/types/categoryType";
 import { Pencil } from "lucide-react";
 import { X } from "lucide-react";
+import { Button } from "./ui/button";
+import { useTodoActions } from "@/hooks/useTodoActions";
 
 type PropType = {
   todo: Todo;
@@ -18,6 +20,7 @@ const categoryColors: Record<string, string> = {
 };
 
 const TodoItem = ({ todo, category }: PropType) => {
+  const { handleRemoveTodo } = useTodoActions();
   return (
     <li className="flex gap-5 rounded-md border-2 border-solid border-gray-300 p-2">
       <p className="mr-auto w-100">{todo.text}</p>
@@ -27,7 +30,9 @@ const TodoItem = ({ todo, category }: PropType) => {
         {category.name}
       </p>
       <Pencil />
-      <X />
+      <Button onClick={() => handleRemoveTodo(todo.id)}>
+        <X />
+      </Button>
     </li>
   );
 };
