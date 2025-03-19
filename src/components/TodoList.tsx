@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodoItem from "./Todo";
 import { useGetTodosQuery } from "../store/todosApi";
 import { useGetCategoriesQuery } from "../store/categoriesApi";
@@ -12,12 +12,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { Category } from "@/types/categoryType";
 
 const TodoList = () => {
   const { data: todos = [] } = useGetTodosQuery();
-  const { data: categories = [] } = useGetCategoriesQuery();
+  const { data: categories = [] } = useGetCategoriesQuery() as {
+    data: Category[];
+  };
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [todosPerPage, setTodosPerPage] = useState(5);
 
@@ -35,7 +38,14 @@ const TodoList = () => {
           ? todo.completed
           : !todo.completed,
     );
-  const totalPages = Math.ceil(todos.length / todosPerPage);
+  const totalPages = Math.ceil(filteredTodos.length / todosPerPage);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(1);
+    }
+  }, [filteredTodos.length, currentPage, totalPages]);
+
   const startIndex = (currentPage - 1) * todosPerPage;
   const paginatedTodos = filteredTodos.slice(
     startIndex,
@@ -56,13 +66,17 @@ const TodoList = () => {
           paginatedTodos.map((todo) => {
             const category = categories.find(
               (cat) =>
-                String(cat.id) === String(todo.category?.id || todo.category),
+                String(cat.id) ===
+                String(
+                  typeof todo.category === "object"
+                    ? todo.category.id
+                    : todo.category,
+                ),
             );
             return (
               <TodoItem
-                // key={todo.id}
                 todo={todo}
-                category={category || { id: "unknown", name: "unknown" }}
+                category={category}
                 categories={categories}
               />
             );
