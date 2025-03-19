@@ -2,6 +2,6 @@ export type Todo = {
   id: string;
   text: string;
   completed: boolean;
-  category: string;
+  category?: string;
   description: string;
 };

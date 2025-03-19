@@ -27,6 +27,7 @@ import {
   SelectValue,
   SelectGroup,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 type PropType = {
   todo: Todo;
@@ -34,25 +35,18 @@ type PropType = {
   categories: Category[];
 };
 
-const categoryColors: Record<string, string> = {
-  Work: "bg-blue-200 text-blue-500",
-  Personal: "bg-pink-200 text-pink-500",
-  Shopping: "bg-green-200 text-green-500",
-  Health: "bg-teal-200 text-teal-500",
-  Learning: "bg-purple-200 text-purple-500",
-  unknown: "bg-gray-200 text-gray-500",
-};
-
-const TodoItem = ({ todo, category, categories }: PropType) => {
+const TodoItem = ({ todo, categories }: PropType) => {
   const { handleRemoveTodo, handleToggleTodo, handleEditTodo } =
     useTodoActions();
 
   const [editedText, setEditedText] = useState(todo.text);
   const [editedDescription, setEditedDescription] = useState(todo.description);
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
-    todo.category?.id,
+    todo.category,
   );
-  console.log("Todo category:", todo.category);
+  const categoryData = categories.find(
+    (cat) => String(cat.id) === String(todo.category),
+  );
 
   const handleSave = () => {
     handleEditTodo({
@@ -75,11 +69,14 @@ const TodoItem = ({ todo, category, categories }: PropType) => {
               onCheckedChange={() => handleToggleTodo(todo)}
             />
             <p className="mr-auto">{todo.text}</p>
-            <p
-              className={`rounded-md px-2 font-semibold ${categoryColors[category.name]}`}
+            <Badge
+              className="cursor-pointer"
+              style={{
+                backgroundColor: categoryData?.color || "gray",
+              }}
             >
-              {category.name}
-            </p>
+              {categoryData?.name || "Unknown"}
+            </Badge>
 
             <Dialog>
               <DialogTrigger asChild>
