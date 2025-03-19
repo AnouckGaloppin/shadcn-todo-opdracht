@@ -9,29 +9,30 @@ import { useState } from "react";
 import { Todo } from "@/types/todoType";
 
 export const useTodoActions = () => {
-  const { data: todos = [], refetch } = useGetTodosQuery();
+  const { data: todos = [], refetch: handleGetTodos } = useGetTodosQuery();
   const [addTodo] = useAddTodoMutation();
   const [removeTodo] = useRemoveTodoMutation();
   const [toggleTodo] = useToggleTodoMutation();
   const [todo, setText] = useState("");
   const [category, setCategory] = useState("");
 
-  const handleGetTodos = () => {
-    refetch();
-  };
-
-  const handleAddTodo = () => {
+  const handleAddTodo = async () => {
     if (!todo.trim()) return;
-    addTodo({
-      text: todo,
-      id: crypto.randomUUID(),
-      completed: false,
-      category,
-      description: "",
-    });
-    setText("");
-    setCategory("");
-    toast.success("Todo added successfully");
+    try {
+      await addTodo({
+        text: todo,
+        id: crypto.randomUUID(),
+        completed: false,
+        category,
+        description: "",
+      }).unwrap();
+      setText("");
+      setCategory("");
+      toast.success("Todo added successfully");
+      handleGetTodos();
+    } catch (error) {
+      toast.error("Failed to add todo");
+    }
   };
 
   const handleRemoveTodo = async (id: string) => {
@@ -62,6 +63,7 @@ export const useTodoActions = () => {
 
   return {
     todos,
+    todo,
     setText,
     category,
     setCategory,

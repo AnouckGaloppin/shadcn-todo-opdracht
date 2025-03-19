@@ -36,12 +36,14 @@ const TodoForm = () => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {categories ? (
-              categories.map((cat) => (
-                <SelectItem key={cat.id} value={cat.id}>
-                  {cat.name}
-                </SelectItem>
-              ))
+            {categories && categories.length > 0 ? (
+              categories
+                .filter((cat) => cat.id && cat.id.trim() !== "")
+                .map((cat) => (
+                  <SelectItem key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </SelectItem>
+                ))
             ) : (
               <p>No categories found</p>
             )}
