@@ -4,6 +4,12 @@ import { Pencil } from "lucide-react";
 import { X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useTodoActions } from "@/hooks/useTodoActions";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronDown } from "lucide-react";
 
 type PropType = {
   todo: Todo;
@@ -22,17 +28,27 @@ const categoryColors: Record<string, string> = {
 const TodoItem = ({ todo, category }: PropType) => {
   const { handleRemoveTodo } = useTodoActions();
   return (
-    <li className="flex gap-5 rounded-md border-2 border-solid border-gray-300 p-2">
-      <p className="mr-auto w-100">{todo.text}</p>
-      <p
-        className={`rounded-md pr-2 pl-2 font-semibold ${categoryColors[category.name]}`}
-      >
-        {category.name}
-      </p>
-      <Pencil />
-      <Button onClick={() => handleRemoveTodo(todo.id)}>
-        <X />
-      </Button>
+    <li className="flex flex-col rounded-md border-2 border-solid border-gray-300 p-2 transition-all">
+      <div className="flex w-full items-center gap-5">
+        <p className="mr-auto">{todo.text}</p>
+        <p
+          className={`rounded-md px-2 font-semibold ${categoryColors[category.name]}`}
+        >
+          {category.name}
+        </p>
+        <Pencil />
+        <Button onClick={() => handleRemoveTodo(todo.id)}>
+          <X />
+        </Button>
+        <Collapsible>
+          <CollapsibleTrigger className="flex items-center">
+            <ChevronDown />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="w-full border-t border-gray-300 bg-gray-100 p-2 transition-all">
+            <p>{todo.description}</p>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
     </li>
   );
 };
