@@ -1,10 +1,16 @@
-import { useAddTodoMutation, useRemoveTodoMutation } from "@/store/todosApi";
+import {
+  useAddTodoMutation,
+  useRemoveTodoMutation,
+  useToggleTodoMutation,
+} from "@/store/todosApi";
 import { toast } from "sonner";
 import { useState } from "react";
+import { Todo } from "@/types/todoType";
 
 export const useTodoActions = () => {
   const [addTodo] = useAddTodoMutation();
   const [removeTodo] = useRemoveTodoMutation();
+  const [toggleTodo] = useToggleTodoMutation();
   const [todo, setText] = useState("");
   const [category, setCategory] = useState("");
 
@@ -23,9 +29,7 @@ export const useTodoActions = () => {
   };
 
   const handleRemoveTodo = async (id: string) => {
-    console.log("Deleting todo with ID: ", id);
     if (!id) {
-      console.log("id not found");
       toast.error("Todo not found: invalid ID");
       return;
     }
@@ -37,6 +41,19 @@ export const useTodoActions = () => {
     }
   };
 
+  const handleToggleTodo = async (todo: Todo) => {
+    if (!todo.id) {
+      toast.error("Todo not found: invalid ID");
+      return;
+    }
+    try {
+      await toggleTodo(todo).unwrap();
+      toast.success("Todo toggled successfully");
+    } catch (error) {
+      toast.error("Failed to toggle todo");
+    }
+  };
+
   return {
     todo,
     setText,
@@ -44,5 +61,6 @@ export const useTodoActions = () => {
     setCategory,
     handleAddTodo,
     handleRemoveTodo,
+    handleToggleTodo,
   };
 };
