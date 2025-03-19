@@ -1,5 +1,6 @@
 import {
   useAddTodoMutation,
+  useGetTodosQuery,
   useRemoveTodoMutation,
   useToggleTodoMutation,
 } from "@/store/todosApi";
@@ -8,11 +9,16 @@ import { useState } from "react";
 import { Todo } from "@/types/todoType";
 
 export const useTodoActions = () => {
+  const { data: todos = [], refetch } = useGetTodosQuery();
   const [addTodo] = useAddTodoMutation();
   const [removeTodo] = useRemoveTodoMutation();
   const [toggleTodo] = useToggleTodoMutation();
   const [todo, setText] = useState("");
   const [category, setCategory] = useState("");
+
+  const handleGetTodos = () => {
+    refetch();
+  };
 
   const handleAddTodo = () => {
     if (!todo.trim()) return;
@@ -55,10 +61,11 @@ export const useTodoActions = () => {
   };
 
   return {
-    todo,
+    todos,
     setText,
     category,
     setCategory,
+    handleGetTodos,
     handleAddTodo,
     handleRemoveTodo,
     handleToggleTodo,

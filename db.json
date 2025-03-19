@@ -108,7 +108,7 @@
     {
       "id": "48",
       "text": "Read chapter of technical book",
-      "completed": true,
+      "completed": false,
       "category": "5",
       "description": "Read a chapter from a technical book for knowledge gain"
     }
