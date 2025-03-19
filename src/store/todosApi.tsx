@@ -37,6 +37,14 @@ const todosApi = createApi({
       }),
       invalidatesTags: ["Todos"],
     }),
+    editTodo: builder.mutation<void, Todo>({
+      query: (todo) => ({
+        url: `/todos/${todo.id}`,
+        method: "PATCH",
+        body: todo,
+      }),
+      invalidatesTags: ["Todos"],
+    }),
   }),
 });
 
@@ -46,4 +54,5 @@ export const {
   useAddTodoMutation,
   useRemoveTodoMutation,
   useToggleTodoMutation,
+  useEditTodoMutation,
 } = todosApi;

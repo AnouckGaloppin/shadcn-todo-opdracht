@@ -2,7 +2,6 @@ import { useState } from "react";
 import TodoItem from "./Todo";
 import { useGetTodosQuery } from "../store/todosApi";
 import { useGetCategoriesQuery } from "../store/categoriesApi";
-import { Category } from "@/types/categoryType";
 import Pagination from "./Pagination";
 import Filter from "./Filter";
 import {
@@ -18,7 +17,7 @@ const TodoList = () => {
   const { data: todos = [] } = useGetTodosQuery();
   const { data: categories = [] } = useGetCategoriesQuery();
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [todosPerPage, setTodosPerPage] = useState(5);
 
@@ -55,14 +54,16 @@ const TodoList = () => {
       <ul className="mt-5 flex flex-col gap-2">
         {paginatedTodos.length > 0 ? (
           paginatedTodos.map((todo) => {
-            const category: Category | undefined = categories.find(
-              (cat) => cat.id === todo.category,
+            const category = categories.find(
+              (cat) =>
+                String(cat.id) === String(todo.category?.id || todo.category),
             );
             return (
               <TodoItem
-                key={todo.id}
+                // key={todo.id}
                 todo={todo}
                 category={category || { id: "unknown", name: "unknown" }}
+                categories={categories}
               />
             );
           })

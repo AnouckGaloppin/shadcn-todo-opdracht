@@ -3,6 +3,7 @@ import {
   useGetTodosQuery,
   useRemoveTodoMutation,
   useToggleTodoMutation,
+  useEditTodoMutation,
 } from "@/store/todosApi";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -13,6 +14,7 @@ export const useTodoActions = () => {
   const [addTodo] = useAddTodoMutation();
   const [removeTodo] = useRemoveTodoMutation();
   const [toggleTodo] = useToggleTodoMutation();
+  const [editTodo] = useEditTodoMutation();
   const [todo, setText] = useState("");
   const [category, setCategory] = useState("");
 
@@ -61,6 +63,15 @@ export const useTodoActions = () => {
     }
   };
 
+  const handleEditTodo = async (updatedTodo: Todo) => {
+    try {
+      await editTodo(updatedTodo).unwrap();
+      toast.success("Todo edited successfully");
+    } catch (error) {
+      toast.error("Failed to edit todo");
+    }
+  };
+
   return {
     todos,
     todo,
@@ -71,5 +82,6 @@ export const useTodoActions = () => {
     handleAddTodo,
     handleRemoveTodo,
     handleToggleTodo,
+    handleEditTodo,
   };
 };
