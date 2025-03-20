@@ -65,13 +65,7 @@ const TodoList = () => {
         {paginatedTodos.length > 0 ? (
           paginatedTodos.map((todo) => {
             const category = categories.find(
-              (cat) =>
-                String(cat.id) ===
-                String(
-                  typeof todo.category === "object"
-                    ? todo.category.id
-                    : todo.category,
-                ),
+              (cat) => String(cat.id) === String(todo.category),
             );
             return (
               <TodoItem
