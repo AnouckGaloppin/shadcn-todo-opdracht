@@ -5,7 +5,7 @@ const todosApi = createApi({
   tagTypes: ["Todos"],
   reducerPath: "todosApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3001",
+    baseUrl: "https://mousy-cerulean-silica.glitch.me",
   }),
   endpoints: (builder) => ({
     getTodos: builder.query<Todo[], void>({
