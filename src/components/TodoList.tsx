@@ -76,7 +76,7 @@ const TodoList = () => {
             return (
               <TodoItem
                 todo={todo}
-                category={category}
+                category={category ? category : { id: "", name: "", color: "" }}
                 categories={categories}
               />
             );

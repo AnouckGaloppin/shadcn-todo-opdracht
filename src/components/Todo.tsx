@@ -44,6 +44,8 @@ const TodoItem = ({ todo, categories }: PropType) => {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     todo.category,
   );
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const categoryData = categories.find(
     (cat) => String(cat.id) === String(todo.category),
   );
@@ -55,6 +57,7 @@ const TodoItem = ({ todo, categories }: PropType) => {
       description: editedDescription,
       category: selectedCategory,
     });
+    setIsDialogOpen(false);
   };
 
   console.log("Categories:", categories);
@@ -62,7 +65,7 @@ const TodoItem = ({ todo, categories }: PropType) => {
   return (
     <Collapsible>
       <li className="rounded-md border-2 border-gray-300 transition-all">
-        <CollapsibleTrigger className="flex w-full flex-col p-2 transition-all hover:bg-gray-100">
+        <CollapsibleTrigger className="flex w-full flex-col p-2 transition-all hover:bg-gray-100 dark:hover:text-blue-950">
           <div className="flex items-center gap-5">
             <Checkbox
               checked={todo.completed}
@@ -78,9 +81,9 @@ const TodoItem = ({ todo, categories }: PropType) => {
               {categoryData?.name || "Unknown"}
             </Badge>
 
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button variant="ghost">
+                <Button variant="ghost" onClick={() => setIsDialogOpen(true)}>
                   <Pencil />
                 </Button>
               </DialogTrigger>
@@ -123,7 +126,12 @@ const TodoItem = ({ todo, categories }: PropType) => {
                 </div>
 
                 <div className="mt-4 flex justify-end gap-2">
-                  <Button variant="outline">Cancel</Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    Cancel
+                  </Button>
                   <Button onClick={handleSave}>Save</Button>
                 </div>
               </DialogContent>
@@ -135,7 +143,7 @@ const TodoItem = ({ todo, categories }: PropType) => {
           </div>
         </CollapsibleTrigger>
 
-        <CollapsibleContent className="border-t border-gray-300 bg-gray-100 p-2">
+        <CollapsibleContent className="border-t border-gray-300 p-2 hover:bg-gray-100 dark:hover:text-blue-950">
           <p>{todo.description}</p>
         </CollapsibleContent>
       </li>

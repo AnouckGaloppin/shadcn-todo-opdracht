@@ -11,15 +11,15 @@
       "id": "2",
       "text": "Build a todo app",
       "completed": false,
-      "category": "1",
+      "category": "2",
       "description": "Develop a simple todo application using React"
     },
     {
       "id": "3",
-      "text": "Go for a run",
+      "text": "Schedule dentist appointment",
       "completed": false,
-      "category": "4",
-      "description": "Jog around the neighborhood for 30 minutes"
+      "category": "2",
+      "description": "Book an appointment for a dental wwdwqcheck-up"
     },
     {
       "id": "4",
@@ -36,46 +36,11 @@
       "description": "Purchase weekly groceries from the local store"
     },
     {
-      "id": "6",
-      "text": "Prepare presentation for client meeting",
-      "completed": false,
-      "category": "1",
-      "description": "Create slides for the upcoming client meeting"
-    },
-    {
-      "id": "7",
-      "text": "Review project timeline",
-      "completed": true,
-      "category": "1",
-      "description": "Go over the project timeline and ensure deadlines are met"
-    },
-    {
       "id": "8",
       "text": "Update documentation",
       "completed": false,
       "category": "1",
       "description": "Add recent changes to the project documentation"
-    },
-    {
-      "id": "9",
-      "text": "Fix bug in login component",
-      "completed": true,
-      "category": "1",
-      "description": "Resolve the issue causing login failures"
-    },
-    {
-      "id": "10",
-      "text": "Attend team standup",
-      "completed": false,
-      "category": "1",
-      "description": "Participate in the daily team standup meeting"
-    },
-    {
-      "id": "18",
-      "text": "Call mom",
-      "completed": true,
-      "category": "2",
-      "description": "Have a phone call with mom to catch up"
     },
     {
       "id": "19",
